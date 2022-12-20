@@ -11,3 +11,15 @@ exports.createUser = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
+exports.getAllUsers = asyncHandler(async (req, res, next) => {
+  const user = await User.find();
+
+  res.status(200).json({
+    status: 'success',
+    total: user.length,
+    data: {
+      user,
+    },
+  });
+});
