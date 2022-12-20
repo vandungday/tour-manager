@@ -26,9 +26,24 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 
 exports.getUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
+
   if (!user) {
     return next(new ErrorResponse('No user found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});
+
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body);
+
+  if (!user) {
+    return next(new ErrorResponse('No tour found with that ID', 404));
   }
 
   res.status(200).json({
