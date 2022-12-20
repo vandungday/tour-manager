@@ -26,7 +26,7 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 
 exports.getUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
-
+  console.log(user);
   if (!user) {
     return next(new ErrorResponse('No user found with that ID', 404));
   }
