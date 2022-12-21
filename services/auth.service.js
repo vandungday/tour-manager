@@ -16,20 +16,17 @@ const loginUser = async (email, password) => {
     throw new ErrorResponse('Incorrect email or password', 400);
   }
 
-  const url = `${req.protocol}://${req.get('host')}/me`;
+  return user;
+};
 
-  const html = pug.renderFile(`${__dirname}/../views/email/welcome.pug`, {
-    url,
-    username: user.username,
-  });
+const forgotPassword = async (email) => {
+  const user = await User.findOne({ email });
 
-  const options = {
-    email: user.email,
-    subject: 'Welcome to the Natours Family!',
-    html,
-  };
+  if (!user) {
+    throw new ErrorResponse('Not fount email', 404);
+  }
 
-  return { user, options };
+  return user;
 };
 
 const mailLogin = (user, req) => {
@@ -48,7 +45,27 @@ const mailLogin = (user, req) => {
   return options;
 };
 
+const mailForgotPassword = (user, req, resetToken) => {
+  const url = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/reset-password/${resetToken}`;
+
+  const html = pug.renderFile(`${__dirname}/../views/email/passwordReset.pug`, {
+    url,
+    username: user.username,
+  });
+
+  const options = {
+    email: user.email,
+    subject: 'Your password reset token (valid for only 10 minutes)',
+    html,
+  };
+  return options;
+};
+
 module.exports = {
   loginUser,
   mailLogin,
+  forgotPassword,
+  mailForgotPassword,
 };
