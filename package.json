@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "import:data": "node ./seeder --import",
+    "delete:data": "node ./seeder --delete"
   },
   "keywords": [],
   "author": "",

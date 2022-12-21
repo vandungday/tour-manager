@@ -1,4 +1,4 @@
-const Tour = require('../models/Tours');
+const Tour = require('../models/Tour');
 const asyncHandler = require('../middlewares/asyncHandler');
 const ErrorResponse = require('../middlewares/ErrorResponse');
 
