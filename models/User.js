@@ -60,14 +60,21 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
+  // nếu password không sửa đổi thì next()
   if (!this.isModified('password')) return next();
 
   this.password = await bcrypt.hash(this.password, 12);
-
-  // Delete passwordConfirm before save
+  // xoá passwordConfirm trước khi lưu vào database
   this.passwordConfirm = undefined;
 
+  next();
+});
+
+userSchema.pre('save', async function (next) {
+  // nếu password không sửa đổi hoặc user mới tạo thì next()
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
   next();
 });
 

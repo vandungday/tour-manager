@@ -29,6 +29,25 @@ const forgotPassword = async (email) => {
   return user;
 };
 
+const resetPassword = async (hashedToken, req) => {
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new ErrorResponse('Token is invalid or has expired', 400));
+  }
+
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+
+  return user;
+};
+
 const mailLogin = (user, req) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
 
@@ -48,7 +67,7 @@ const mailLogin = (user, req) => {
 const mailForgotPassword = (user, req, resetToken) => {
   const url = `${req.protocol}://${req.get(
     'host'
-  )}/api/v1/users/reset-password/${resetToken}`;
+  )}/api/v1/auth/reset-password/${resetToken}`;
 
   const html = pug.renderFile(`${__dirname}/../views/email/passwordReset.pug`, {
     url,
@@ -68,4 +87,5 @@ module.exports = {
   mailLogin,
   forgotPassword,
   mailForgotPassword,
+  resetPassword,
 };
