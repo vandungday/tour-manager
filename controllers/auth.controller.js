@@ -1,10 +1,12 @@
-const User = require('../models/User');
 const asyncHandler = require('../middlewares/asyncHandler');
-const { userService, authService } = require('../service');
+const { userService, authService, mailService } = require('../services');
 
 exports.register = asyncHandler(async (req, res, next) => {
   const user = await userService.createNewUser(req.body);
   const token = user.signToken();
+  const options = authService.mailLogin(user, req);
+
+  await mailService(options);
 
   res.status(201).json({
     status: 'success',
@@ -26,3 +28,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     token,
   });
 });
+
+exports.forgotPassword = asyncHandler(async (req, res, next) => {});
+
+exports.resetPassword = asyncHandler(async (req, res, next) => {});
