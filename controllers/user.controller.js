@@ -102,3 +102,21 @@ exports.deleteMe = asyncHandler(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.updateMyPassword = asyncHandler(async (req, res, next) => {
+  const { passwordCurrent, password, passwordConfirm } = req.body;
+
+  const user = await userService.updateMyPassword(
+    passwordCurrent,
+    password,
+    passwordConfirm,
+    req
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});

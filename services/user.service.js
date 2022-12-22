@@ -46,9 +46,29 @@ const updateMe = async (req, filterOject) => {
   return updatedUser;
 };
 
+const updateMyPassword = async (
+  passwordCurrent,
+  password,
+  passwordConfirm,
+  req
+) => {
+  const user = await User.findById(req.user.id).select('+password');
+
+  if (!(await user.checkPasswordMatch(passwordCurrent))) {
+    throw new ErrorResponse('Your current password is wrong.', 401);
+  }
+
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+
+  return user;
+};
+
 module.exports = {
   createNewUser,
   getUserByEmail,
   filterOject,
   updateMe,
+  updateMyPassword,
 };
