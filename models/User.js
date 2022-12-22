@@ -91,7 +91,10 @@ userSchema.methods.signToken = function () {
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
-  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
   // Password Reset will expire after 10m
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 

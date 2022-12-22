@@ -66,3 +66,8 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.getMe = asyncHandler(async (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+});
