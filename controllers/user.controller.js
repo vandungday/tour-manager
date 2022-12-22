@@ -1,5 +1,8 @@
 const asyncHandler = require('../middlewares/asyncHandler');
 const User = require('../models/User');
+const APIFeatures = require('../middlewares/APIFeatures');
+const ErrorResponse = require('../middlewares/ErrorResponse');
+const { userService } = require('../services');
 
 exports.createUser = asyncHandler(async (req, res, next) => {
   const newUser = await User.create(req.body);
@@ -13,13 +16,19 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
-  const user = await User.find();
+  const features = new APIFeatures(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const users = await features.query;
 
   res.status(200).json({
     status: 'success',
-    total: user.length,
+    total: users.length,
     data: {
-      user,
+      users,
     },
   });
 });
@@ -70,4 +79,17 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
 exports.getMe = asyncHandler(async (req, res, next) => {
   req.params.id = req.user.id;
   next();
+});
+
+exports.updateMe = asyncHandler(async (req, res, next) => {
+  // chỉ update name và email
+  const filterOject = userService.filterOject(req.body, 'name', 'email');
+  const updatedUser = await userService.updateMe(req, filterOject);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
+  });
 });

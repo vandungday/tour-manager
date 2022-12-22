@@ -3,12 +3,6 @@ const { userService } = require('../services');
 const ErrorResponse = require('../middlewares/ErrorResponse');
 const User = require('../models/User');
 
-/**
- * Login with username and password
- * @param {string} email
- * @param {string} password
- * @returns {Promise<User>}
- */
 const loginUser = async (email, password) => {
   const user = await userService.getUserByEmail(email);
 
@@ -36,7 +30,7 @@ const resetPassword = async (hashedToken, req) => {
   });
 
   if (!user) {
-    return next(new ErrorResponse('Token is invalid or has expired', 400));
+    throw next(new ErrorResponse('Token is invalid or has expired', 400));
   }
 
   user.password = req.body.password;
@@ -53,7 +47,7 @@ const mailLogin = (user, req) => {
 
   const html = pug.renderFile(`${__dirname}/../views/email/welcome.pug`, {
     url,
-    username: user.username,
+    username: user.name,
   });
 
   const options = {
@@ -71,7 +65,7 @@ const mailForgotPassword = (user, req, resetToken) => {
 
   const html = pug.renderFile(`${__dirname}/../views/email/passwordReset.pug`, {
     url,
-    username: user.username,
+    username: user.name,
   });
 
   const options = {

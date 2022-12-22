@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server",
+    "start:prod": "SET NODE_ENV=production & nodemon server",
     "import:data": "node ./seeder --import",
     "delete:data": "node ./seeder --delete"
   },

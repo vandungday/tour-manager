@@ -6,7 +6,10 @@ const authMiddleware = require('../../middlewares/auth');
 
 router.use(authMiddleware.protect);
 // để trước router /:id
-router.route('/me').get(userController.getMe, userController.getUser);
+router
+  .route('/me')
+  .get(userController.getMe, userController.getUser)
+  .patch(userController.updateMe);
 
 router
   .route('/')

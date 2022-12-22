@@ -1,6 +1,7 @@
 const Tour = require('../models/Tour');
 const asyncHandler = require('../middlewares/asyncHandler');
 const ErrorResponse = require('../middlewares/ErrorResponse');
+const APIFeatures = require('../middlewares/APIFeatures');
 
 exports.createTour = asyncHandler(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
@@ -14,7 +15,12 @@ exports.createTour = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllTours = asyncHandler(async (req, res, next) => {
-  const tours = await Tour.find();
+  const features = new APIFeatures(Tour.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const tours = await features.query;
 
   res.status(200).json({
     status: 'success',
