@@ -59,6 +59,11 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
+  next();
+});
+
 userSchema.pre('save', async function (next) {
   // nếu password không sửa đổi thì next()
   if (!this.isModified('password')) return next();

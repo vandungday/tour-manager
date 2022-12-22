@@ -9,7 +9,8 @@ router.use(authMiddleware.protect);
 router
   .route('/me')
   .get(userController.getMe, userController.getUser)
-  .patch(userController.updateMe);
+  .patch(userController.updateMe)
+  .delete(userController.deleteMe);
 
 router
   .route('/')
