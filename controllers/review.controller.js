@@ -10,7 +10,10 @@ exports.setTourUserByIds = (req, res, next) => {
 };
 
 exports.getAllReviews = asyncHandler(async (req, res, next) => {
-  const features = new APIFeatures(Review.find(), req.query)
+  let filterTour = {};
+  if (req.params.tourId) filterTour = { tour: req.params.tourId };
+
+  const features = new APIFeatures(Review.find(filterTour), req.query)
     .filter()
     .sort()
     .limitFields()
