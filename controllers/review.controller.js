@@ -2,7 +2,7 @@ const Review = require('../models/Review');
 const APIFeatures = require('../middlewares/APIFeatures');
 const asyncHandler = require('../middlewares/asyncHandler');
 
-exports.getAllReview = asyncHandler(async (req, res, next) => {
+exports.getAllReviews = asyncHandler(async (req, res, next) => {
   const features = new APIFeatures(Review.find(), req.query)
     .filter()
     .sort()
@@ -16,6 +16,21 @@ exports.getAllReview = asyncHandler(async (req, res, next) => {
     total: reviews.length,
     data: {
       reviews,
+    },
+  });
+});
+
+exports.getReview = asyncHandler(async (req, res, next) => {
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return next(new ErrorResponse('No review found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      review,
     },
   });
 });
