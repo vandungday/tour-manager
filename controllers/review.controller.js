@@ -2,6 +2,13 @@ const Review = require('../models/Review');
 const APIFeatures = require('../middlewares/APIFeatures');
 const asyncHandler = require('../middlewares/asyncHandler');
 
+exports.setTourUserByIds = (req, res, next) => {
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  if (!req.body.user) req.body.user = req.user.id;
+  console.log(req.body);
+  next();
+};
+
 exports.getAllReviews = asyncHandler(async (req, res, next) => {
   const features = new APIFeatures(Review.find(), req.query)
     .filter()
