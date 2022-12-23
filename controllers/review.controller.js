@@ -45,3 +45,18 @@ exports.createReview = asyncHandler(async (req, res, next) => {
     },
   });
 });
+
+exports.updateReview = asyncHandler(async (req, res, next) => {
+  const review = await Review.findByIdAndUpdate(req.params.id, req.body);
+
+  if (!review) {
+    return next(new ErrorResponse('No review found with that ID', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      review,
+    },
+  });
+});
