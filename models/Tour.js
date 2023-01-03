@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 const { Schema } = mongoose;
 
 const tourSchema = new Schema(
@@ -112,6 +113,11 @@ const tourSchema = new Schema(
     toObject: { virtuals: true },
   }
 );
+
+tourSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
 
 tourSchema.virtual('reviews', {
   ref: 'Review',

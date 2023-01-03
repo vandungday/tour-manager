@@ -2,9 +2,11 @@ const tourRouter = require('./tour.route');
 const userRouter = require('./user.route');
 const authRouter = require('./auth.route');
 const reviewRouter = require('./review.route');
+const viewRouter = require('./view.route');
 const errorController = require('../../controllers/error.controller');
 
 module.exports = (app) => {
+  app.use('/', viewRouter);
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/tours', tourRouter);

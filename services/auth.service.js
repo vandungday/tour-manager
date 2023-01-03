@@ -42,6 +42,18 @@ const resetPassword = async (hashedToken, req) => {
   return user;
 };
 
+const signCookie = (res, req, user, token) => {
+  res.cookie('jwt', token, {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+  });
+
+  user.password = undefined;
+};
+
 const mailLogin = (user, req) => {
   const url = `${req.protocol}://${req.get('host')}/me`;
 
@@ -80,6 +92,7 @@ module.exports = {
   loginUser,
   mailLogin,
   forgotPassword,
+  signCookie,
   mailForgotPassword,
   resetPassword,
 };

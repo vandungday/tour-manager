@@ -25,10 +25,14 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   const user = await authService.loginUser(email, password);
   const accessToken = user.signToken();
+  authService.signCookie(res, req, user, accessToken);
 
   res.status(200).json({
     status: 'success',
     token: accessToken,
+    data: {
+      user,
+    },
   });
 });
 
