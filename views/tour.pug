@@ -46,7 +46,7 @@ block content
 
                     each guide in tour.guides
                         .overview-box__detail
-                            img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
+                            img.overview-box__img(src=`/img/users/${guide.avatar}`, alt=`${guide.name}`)
 
                             - if (guide.role === 'lead-guide')
                                 span.overview-box__label Lead guide
