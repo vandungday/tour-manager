@@ -36,6 +36,14 @@ exports.login = asyncHandler(async (req, res, next) => {
   });
 });
 
+exports.logout = (req, res, next) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 2 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await authService.forgotPassword(req.body.email);
   const resetToken = user.createPasswordResetToken();
