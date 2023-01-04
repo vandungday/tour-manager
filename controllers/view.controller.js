@@ -25,3 +25,15 @@ exports.getTour = asyncHandler(async (req, res, next) => {
     tour,
   });
 });
+
+exports.loginPage = asyncHandler(async (req, res, next) => {
+  res.status(200).render('login', {
+    status: 'success',
+  });
+});
+
+exports.registerPage = asyncHandler(async (req, res, next) => {
+  res.status(200).render('register', {
+    status: 'success',
+  });
+});

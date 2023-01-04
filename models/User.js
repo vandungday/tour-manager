@@ -83,14 +83,27 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.methods.checkPasswordMatch = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
-
 userSchema.methods.signToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+};
+
+userSchema.methods.checkPasswordMatch = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+  // False means NOT changed
+  return false;
 };
 
 userSchema.methods.createPasswordResetToken = function () {
