@@ -11956,7 +11956,7 @@ exports.showAlert = showAlert;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.login = void 0;
+exports.register = exports.logout = exports.login = void 0;
 var _axios = _interopRequireDefault(require("axios"));
 var _alert = require("./alert");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -12039,6 +12039,49 @@ var logout = /*#__PURE__*/function () {
   };
 }();
 exports.logout = logout;
+var register = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(name, email, password, passwordConfirm) {
+    var result;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return (0, _axios.default)({
+            method: 'POST',
+            url: 'http://localhost:3000/api/v1/auth/register',
+            data: {
+              name: name,
+              email: email,
+              password: password,
+              passwordConfirm: passwordConfirm
+            }
+          });
+        case 3:
+          result = _context3.sent;
+          if (result.data.status === 'success') {
+            (0, _alert.showAlert)('success', 'Registered successfully!');
+            window.setTimeout(function () {
+              location.assign('/');
+            }, 1000);
+          }
+          _context3.next = 10;
+          break;
+        case 7:
+          _context3.prev = 7;
+          _context3.t0 = _context3["catch"](0);
+          (0, _alert.showAlert)('error', _context3.t0.response.data.message);
+        case 10:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 7]]);
+  }));
+  return function register(_x3, _x4, _x5, _x6) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+exports.register = register;
 },{"axios":"../../node_modules/axios/index.js","./alert":"alert.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -12176,7 +12219,18 @@ require("core-js/modules/web.dom.iterable.js");
 require("regenerator-runtime/runtime.js");
 var _login = require("./login");
 var loginForm = document.querySelector('.form--login');
+var registerForm = document.querySelector('.form--register');
 var logoutBtn = document.querySelector('.nav__el--logout');
+if (registerForm) {
+  registerForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var passwordConfirm = document.getElementById('passwordConfirm').value;
+    (0, _login.register)(name, email, password, passwordConfirm);
+  });
+}
 if (loginForm) {
   loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
