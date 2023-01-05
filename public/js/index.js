@@ -39,10 +39,13 @@ if (logoutBtn) {
 if (updateForm) {
   updateForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const form = new FormData();
 
-    updateUser({ name, email }, 'data');
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('avatar', document.getElementById('photo').files[0]);
+
+    updateUser(form, 'data');
   });
 }
 

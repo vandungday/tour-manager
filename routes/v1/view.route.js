@@ -3,8 +3,6 @@ const router = express.Router();
 const authMiddleware = require('../../middlewares/auth');
 const viewController = require('../../controllers/view.controller');
 
-router.use(authMiddleware.isLogged);
-
 router.route('/').get(authMiddleware.isLogged, viewController.getOverView);
 router
   .route('/me')

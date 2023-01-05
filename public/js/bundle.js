@@ -12063,6 +12063,9 @@ var register = /*#__PURE__*/function () {
           result = _context3.sent;
           if (result.data.status === 'success') {
             (0, _alert.showAlert)('success', 'Registered successfully!');
+            window.setTimeout(function () {
+              location.assign('/login');
+            }, 1000);
           }
           _context3.next = 10;
           break;
@@ -12304,12 +12307,11 @@ if (logoutBtn) {
 if (updateForm) {
   updateForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    (0, _updateUser.updateUser)({
-      name: name,
-      email: email
-    }, 'data');
+    var form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('avatar', document.getElementById('photo').files[0]);
+    (0, _updateUser.updateUser)(form, 'data');
   });
 }
 if (userPasswordForm) {

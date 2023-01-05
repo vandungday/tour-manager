@@ -82,8 +82,9 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateMe = asyncHandler(async (req, res, next) => {
-  // chỉ update name và email
+  // chỉ update name, email và avatar
   const filterOject = userService.filterOject(req.body, 'name', 'email');
+  if (req.file) filterOject.avatar = req.file.filename;
   const updatedUser = await userService.updateMe(req, filterOject);
 
   res.status(200).json({

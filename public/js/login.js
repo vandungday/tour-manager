@@ -52,6 +52,9 @@ export const register = async (name, email, password, passwordConfirm) => {
     });
     if (result.data.status === 'success') {
       showAlert('success', 'Registered successfully!');
+      window.setTimeout(() => {
+        location.assign('/login');
+      }, 1000);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
