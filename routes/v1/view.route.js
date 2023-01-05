@@ -2,8 +2,15 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../../middlewares/auth');
 const viewController = require('../../controllers/view.controller');
+const bookingController = require('../../controllers/booking.controller');
 
-router.route('/').get(authMiddleware.isLogged, viewController.getOverView);
+router
+  .route('/')
+  .get(
+    bookingController.createBookingCheckout,
+    authMiddleware.isLogged,
+    viewController.getOverView
+  );
 router
   .route('/me')
   .get(authMiddleware.protect, viewController.accountPage)

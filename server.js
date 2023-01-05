@@ -1,5 +1,5 @@
+require('dotenv').config();
 const app = require('./app');
-const dotenv = require('dotenv');
 const database = require('./config/database');
 
 process.on('uncaughtException', (err) => {
@@ -8,7 +8,6 @@ process.on('uncaughtException', (err) => {
   process.exit(1);
 });
 
-dotenv.config();
 database();
 
 const post = process.env.PORT || 3000;

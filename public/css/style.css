@@ -1333,6 +1333,7 @@ body {
 }
 
 .form__user-photo {
+    border: 2px solid #ccc;
     height: 7.5rem;
     width: 7.5rem;
     border-radius: 50%;

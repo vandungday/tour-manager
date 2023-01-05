@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const router = require('./routes/v1');
 const app = express();
-const ErrorResponse = require('./middlewares/ErrorResponse');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
