@@ -29,7 +29,9 @@ export const logout = async () => {
       url: 'http://localhost:3000/api/v1/auth/logout',
     });
     if (result.data.status === 'success') {
-      location.reload(true);
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1000);
     }
   } catch (error) {
     showAlert('error', 'Error logging out! Try again.');

@@ -28,12 +28,18 @@ exports.getTour = asyncHandler(async (req, res, next) => {
 
 exports.loginPage = asyncHandler(async (req, res, next) => {
   res.status(200).render('login', {
-    status: 'success',
+    title: 'Login',
   });
 });
 
 exports.registerPage = asyncHandler(async (req, res, next) => {
   res.status(200).render('register', {
-    status: 'success',
+    title: 'Register',
+  });
+});
+
+exports.accountPage = asyncHandler(async (req, res) => {
+  res.status(200).render('account', {
+    title: 'Your account',
   });
 });
