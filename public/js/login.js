@@ -42,7 +42,7 @@ export const register = async (name, email, password, passwordConfirm) => {
   try {
     const result = await axios({
       method: 'POST',
-      url: 'http://localhost:3000/api/v1/auth/register',
+      url: '/api/v1/auth/register',
       data: {
         name,
         email,
