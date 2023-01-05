@@ -9,7 +9,7 @@
     "import:data": "node ./seeder --import",
     "delete:data": "node ./seeder --delete",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
   },
   "keywords": [],
   "author": "",
