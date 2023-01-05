@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server",
-    "start:prod": "SET NODE_ENV=production & nodemon server",
+    "start:prod": "NODE_ENV=production nodemon server",
     "import:data": "node ./seeder --import",
     "delete:data": "node ./seeder --delete",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
