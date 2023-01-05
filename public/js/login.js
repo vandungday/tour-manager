@@ -26,7 +26,7 @@ export const logout = async () => {
   try {
     const result = await axios({
       method: 'GET',
-      url: 'http://localhost:3000/api/v1/auth/logout',
+      url: '/api/v1/auth/logout',
     });
     if (result.data.status === 'success') {
       window.setTimeout(() => {
