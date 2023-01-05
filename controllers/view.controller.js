@@ -1,4 +1,5 @@
 const Tour = require('../models/Tour');
+const Booking = require('../models/Booking');
 const asyncHandler = require('../middlewares/asyncHandler');
 const ErrorResponse = require('../middlewares/ErrorResponse');
 
@@ -41,5 +42,16 @@ exports.registerPage = asyncHandler(async (req, res, next) => {
 exports.accountPage = asyncHandler(async (req, res) => {
   res.status(200).render('account', {
     title: 'Your account',
+  });
+});
+
+exports.myTourPage = asyncHandler(async (req, res) => {
+  const booking = await Booking.find({ user: req.user.id });
+  const tourIds = booking.map((e) => e.tour);
+  const tours = await Tour.find({ _id: { $in: tourIds } });
+
+  res.status(200).render('overview', {
+    title: 'Your tours',
+    tours,
   });
 });

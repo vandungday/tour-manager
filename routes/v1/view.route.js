@@ -11,10 +11,15 @@ router
     authMiddleware.isLogged,
     viewController.getOverView
   );
+
 router
   .route('/me')
   .get(authMiddleware.protect, viewController.accountPage)
   .patch(authMiddleware.protect, viewController.accountPage);
+
+router
+  .route('/my-tours')
+  .get(authMiddleware.protect, viewController.myTourPage);
 
 router.route('/login').get(authMiddleware.isLogged, viewController.loginPage);
 
