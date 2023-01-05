@@ -6,7 +6,11 @@ const viewController = require('../../controllers/view.controller');
 router.use(authMiddleware.isLogged);
 
 router.route('/').get(authMiddleware.isLogged, viewController.getOverView);
-router.route('/me').get(authMiddleware.protect, viewController.accountPage);
+router
+  .route('/me')
+  .get(authMiddleware.protect, viewController.accountPage)
+  .patch(authMiddleware.protect, viewController.accountPage);
+
 router.route('/login').get(authMiddleware.isLogged, viewController.loginPage);
 
 router
