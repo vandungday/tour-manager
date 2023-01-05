@@ -7,6 +7,7 @@ const app = express();
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const cors = require('cors');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -16,6 +17,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
