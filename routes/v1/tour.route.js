@@ -4,6 +4,7 @@ const router = express.Router();
 const tourController = require('../../controllers/tour.controller');
 const authMiddleware = require('../../middlewares/auth');
 const reviewRouter = require('./review.route');
+const { uploadService } = require('../../services');
 
 router.use('/:tourId/reviews', reviewRouter);
 
@@ -15,7 +16,11 @@ router
 router
   .route('/:id')
   .get(tourController.getTour)
-  .patch(authMiddleware.protect, tourController.updateTour)
+  .patch(
+    uploadService.uploadTourImages,
+    uploadService.resizeTourImages,
+    tourController.updateTour
+  )
   .delete(authMiddleware.protect, tourController.deleteTour);
 
 module.exports = router;

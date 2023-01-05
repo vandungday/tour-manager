@@ -12116,6 +12116,7 @@ var updateUser = /*#__PURE__*/function () {
           result = _context.sent;
           if (result.data.status === 'success') {
             (0, _alert.showAlert)('success', 'Updated successfully!');
+            location.reload(true);
           }
           _context.next = 11;
           break;
