@@ -9,3 +9,8 @@ Link demo: https://vandungday-natours.onrender.com/
 3. User profile
   * Update username, avatar, email, and password 
 4. Credit card Payment
+ * How to use
+  > Enter the card details (Test Mood)  <br />
+  > Card No. : 4242 4242 4242 4242  <br />
+  > Expiry date: 25 / 25 <br />
+  > CVV: 222 <br />
