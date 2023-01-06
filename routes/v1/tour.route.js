@@ -17,10 +17,15 @@ router
   .route('/:id')
   .get(tourController.getTour)
   .patch(
+    authMiddleware.restrictTo('admin', 'lead-guide'),
     uploadService.uploadTourImages,
     uploadService.resizeTourImages,
     tourController.updateTour
   )
-  .delete(authMiddleware.protect, tourController.deleteTour);
+  .delete(
+    authMiddleware.protect,
+    authMiddleware.restrictTo('admin', 'lead-guide'),
+    tourController.deleteTour
+  );
 
 module.exports = router;

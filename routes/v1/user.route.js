@@ -18,6 +18,8 @@ router
 
 router.route('/update-my-password').patch(userController.updateMyPassword);
 
+router.use(authMiddleware.restrictTo('admin'));
+
 router
   .route('/')
   .get(userController.getAllUsers)

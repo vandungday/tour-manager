@@ -18,7 +18,13 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(reviewController.updateReview)
-  .delete(reviewController.deleteReview);
+  .patch(
+    authMiddleware.restrictTo('user', 'admin'),
+    reviewController.updateReview
+  )
+  .delete(
+    authMiddleware.restrictTo('user', 'admin'),
+    reviewController.deleteReview
+  );
 
 module.exports = router;
