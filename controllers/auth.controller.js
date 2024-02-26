@@ -7,9 +7,9 @@ const ErrorResponse = require('../middlewares/ErrorResponse');
 exports.register = asyncHandler(async (req, res, next) => {
   const user = await userService.createNewUser(req.body);
   const accessToken = user.signToken();
-  const options = authService.mailLogin(user, req);
+  // const options = authService.mailLogin(user, req);
 
-  await mailService(options);
+  // await mailService(options);
 
   res.status(201).json({
     status: 'success',
